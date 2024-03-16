@@ -65,6 +65,7 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.network)
     implementation(projects.core.common)
+    implementation(projects.feature.nowplaying)
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
