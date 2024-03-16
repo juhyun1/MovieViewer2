@@ -41,5 +41,9 @@ gradlePlugin {
             id = "movie.spotless"
             implementationClass = "SpotlessConventionPlugin"
         }
+        register("androidFeature") {
+            id = "movie.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
     }
 }
