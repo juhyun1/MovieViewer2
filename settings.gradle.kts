@@ -1,19 +1,4 @@
 @file:Suppress("UnstableApiUsage")
-
-include(":core:common")
-
-
-include(":core:datastore")
-
-
-include(":core:domain")
-
-
-include(":core:network")
-
-
-include(":core:data")
-
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -39,3 +24,4 @@ include(":core:datastore")
 include(":core:domain")
 include(":core:network")
 include(":core:common")
+include(":feature:nowplaying")
