@@ -32,5 +32,9 @@ gradlePlugin {
             id = "movie.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidHilt") {
+            id = "movie.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }

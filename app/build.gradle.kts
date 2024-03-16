@@ -2,6 +2,7 @@
 plugins {
     id("movie.android.application")
     id("movie.android.application.compose")
+    id("movie.android.hilt")
 }
 
 android {
