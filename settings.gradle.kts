@@ -31,3 +31,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "MovieViewer"
 include(":app")
+include(":core:data")
+include(":core:datastore")
+include(":core:domain")
+include(":core:network")
