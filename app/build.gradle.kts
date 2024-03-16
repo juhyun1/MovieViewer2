@@ -3,6 +3,7 @@ plugins {
     id("movie.android.application")
     id("movie.android.application.compose")
     id("movie.android.hilt")
+    id("movie.spotless")
 }
 
 android {
@@ -72,4 +73,6 @@ dependencies {
     // logger
     implementation(libs.timber)
 
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }
