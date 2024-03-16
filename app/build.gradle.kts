@@ -70,6 +70,8 @@ dependencies {
     // jetpack
     implementation(libs.androidx.startup)
 
+    implementation(libs.androidx.core.splashscreen)
+
     // logger
     implementation(libs.timber)
 
