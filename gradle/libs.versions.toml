@@ -45,6 +45,7 @@ androidxAnnotation = "1.7.1"
 kotlinxserialization = "1.6.3"
 retrofitKotlinxSerializationJson = "1.0.0"
 androidxCoreSplashscreen = "1.0.1"
+googleSecretPlugin = "2.0.1"
 
 [libraries]
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -115,3 +116,4 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 baseline-profile = { id = "androidx.baselineprofile", version.ref = "androidxMacroBenchmark" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "googleSecretPlugin" }
