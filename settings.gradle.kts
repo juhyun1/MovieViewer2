@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":core:common")
+
+
 include(":core:datastore")
 
 
@@ -35,3 +38,4 @@ include(":core:data")
 include(":core:datastore")
 include(":core:domain")
 include(":core:network")
+include(":core:common")
