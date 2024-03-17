@@ -42,7 +42,7 @@ fun NowPlayingScreen(
                         )
                         Spacer(modifier = Modifier.width(3.dp))
                         Text(
-                            text = movie.release_date,
+                            text = movie.releaseDate,
                             color = Color.Black,
                         )
 //                                    Spacer(modifier = Modifier.width(3.dp))
