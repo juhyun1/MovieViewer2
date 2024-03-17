@@ -2,6 +2,7 @@ plugins {
     id("movie.android.library")
     id("movie.spotless")
     id("movie.android.hilt")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -9,6 +10,6 @@ android {
 }
 
 dependencies {
-
+    api(libs.kotlinx.serialization)
     testImplementation(libs.junit)
 }
