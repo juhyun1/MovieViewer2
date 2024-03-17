@@ -26,7 +26,10 @@ dependencies {
     api(libs.androidx.compose.material3)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
-    1
+
+    api(libs.androidx.lifecycle.runtimeCompose)
+    api(libs.androidx.lifecycle.viewModelCompose)
+
     api(libs.junit)
     api(libs.espresso.core)
     api(libs.androidx.test.ext.junit)

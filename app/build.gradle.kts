@@ -65,16 +65,14 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.network)
     implementation(projects.core.common)
+    implementation(projects.core.designsystem)
     implementation(projects.feature.nowplaying)
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    // material
+    implementation(libs.androidx.appcompat)
+
+    // compose
+    implementation(libs.androidx.activity.compose)
 
     // jetpack
     implementation(libs.androidx.startup)
@@ -83,6 +81,9 @@ dependencies {
 
     // logger
     implementation(libs.timber)
+
+    //coroutine
+    implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
