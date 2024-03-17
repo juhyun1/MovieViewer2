@@ -10,7 +10,7 @@ fun MovieListResponse.asDomain(): MovieListInfo {
     return MovieListInfo(
         page = page,
         results = results.map { it.asDomain() },
-        dates = dates.asDomain(),
+        dates = dates?.asDomain(),
         totalResults = total_results,
         totalPages = total_pages,
     )
@@ -18,16 +18,16 @@ fun MovieListResponse.asDomain(): MovieListInfo {
 
 fun Movie.asDomain(): DomainMovie {
     return DomainMovie(
-        posterPath = poster_path,
+        posterPath = poster_path ?: "",
         adult = adult,
-        overview = overview,
-        releaseDate = release_date,
+        overview = overview ?: "",
+        releaseDate = release_date ?: "",
         genreIds = genre_ids,
         id = id,
-        originalTitle = original_title,
-        originalLanguage = original_language,
+        originalTitle = original_title ?: "",
+        originalLanguage = original_language ?: "",
         title = title,
-        backdropPath = backdrop_path,
+        backdropPath = backdrop_path ?: "",
         popularity = popularity,
         voteCount = vote_count,
         video = video,

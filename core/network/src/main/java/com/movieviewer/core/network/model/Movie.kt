@@ -4,16 +4,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Movie(
-    val poster_path: String,
+    val poster_path: String?,
     val adult: Boolean,
-    val overview: String,
-    val release_date: String,
+    val overview: String?,
+    val release_date: String?,
     val genre_ids: List<Int>,
     val id: Int,
-    val original_title: String,
-    val original_language: String,
+    val original_title: String?,
+    val original_language: String?,
     val title: String,
-    val backdrop_path: String,
+    val backdrop_path: String?,
     val popularity: Float,
     val vote_count: Int,
     val video: Boolean,
@@ -21,9 +21,9 @@ data class Movie(
 
 ) {
     fun compareTo(dto: Movie): Int {
-        return if (this.release_date.isEmpty()) {
+        return if (this.release_date == null || this.release_date.isEmpty()) {
             -1
-        } else if (dto.release_date.isEmpty()) {
+        } else if (dto.release_date == null || dto.release_date.isEmpty()) {
             1
         } else {
             val b = dto.release_date.substringBefore("-", dto.release_date).toInt()
