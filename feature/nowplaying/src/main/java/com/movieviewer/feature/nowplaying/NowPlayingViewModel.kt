@@ -17,8 +17,11 @@ class NowPlayingViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val movieListUseCase: MovieListUseCase,
 ) : ViewModel() {
-    private val _moviesState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
-    val moviesState: MutableStateFlow<PagingData<Movie>> get() = _moviesState
+    private val _nowPlayingState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
+    val nowPlayingState: MutableStateFlow<PagingData<Movie>> get() = _nowPlayingState
+
+    private val _upComingState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
+    val upComingState: MutableStateFlow<PagingData<Movie>> get() = _upComingState
 
     fun fetchNowPlayingList() {
         viewModelScope.launch {
@@ -26,7 +29,18 @@ class NowPlayingViewModel @Inject constructor(
                 .nowPlayingList()
                 .cachedIn(viewModelScope)
                 .collect {
-                    _moviesState.value = it
+                    _nowPlayingState.value = it
+                }
+        }
+    }
+
+    fun fetchUpcomingList() {
+        viewModelScope.launch {
+            movieListUseCase
+                .upComingList()
+                .cachedIn(viewModelScope)
+                .collect {
+                    _nowPlayingState.value = it
                 }
         }
     }

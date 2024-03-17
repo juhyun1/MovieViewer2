@@ -12,5 +12,12 @@ interface MovieListRepository {
         page: Int = 1,
     ): MovieListInfo
 
+    suspend fun upComing(
+        region: String = "KR",
+        language: String = "ko_KR",
+        page: Int = 1,
+    ): MovieListInfo
+
     suspend fun nowPlayingDataSource(): Flow<PagingData<Movie>>
+    suspend fun upComingDataSource(): Flow<PagingData<Movie>>
 }

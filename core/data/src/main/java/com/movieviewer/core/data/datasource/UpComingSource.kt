@@ -7,13 +7,13 @@ import com.movieviewer.core.domain.repository.MovieListRepository
 import retrofit2.HttpException
 import java.io.IOException
 
-class NowPlayingSource(
+class UpComingSource(
     private val movieListRepository: MovieListRepository,
 ) : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val currentPage = params.key ?: 1
-            val movies = movieListRepository.nowPlaying(page = currentPage)
+            val movies = movieListRepository.upComing(page = currentPage)
             LoadResult.Page(
                 data = movies.results,
                 prevKey = if (currentPage == 1) null else currentPage - 1,

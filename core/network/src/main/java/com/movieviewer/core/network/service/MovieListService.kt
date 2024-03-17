@@ -11,6 +11,14 @@ interface MovieListService {
         @Query("language") language: String = "ko_KR",
         @Query("page") page: Int = 1,
     ): MovieListResponse
+
+    @GET("movie/upcoming")
+    suspend fun upComing(
+        @Query("region") region: String = "KR",
+        @Query("language") language: String = "ko_KR",
+        @Query("page") page: Int = 1,
+    ): MovieListResponse
 }
+
 //region
 // https://en.wikipedia.org/wiki/ISO_3166-1

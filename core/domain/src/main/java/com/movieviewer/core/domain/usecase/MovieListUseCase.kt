@@ -12,4 +12,8 @@ class MovieListUseCase @Inject constructor(
     suspend fun nowPlayingList(): Flow<PagingData<Movie>> {
         return repository.nowPlayingDataSource()
     }
+
+    suspend fun upComingList(): Flow<PagingData<Movie>> {
+        return repository.upComingDataSource()
+    }
 }
