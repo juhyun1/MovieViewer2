@@ -1,12 +1,11 @@
 package com.movieviewer.core.data.mapper
 
-
 import com.movieviewer.core.domain.model.MovieListInfo
 import com.movieviewer.core.network.model.Dates
 import com.movieviewer.core.network.model.Movie
 import com.movieviewer.core.network.model.MovieListResponse
-import com.movieviewer.core.domain.model.Movie as DomainMovie
 import com.movieviewer.core.domain.model.Dates as DomainDates
+import com.movieviewer.core.domain.model.Movie as DomainMovie
 fun MovieListResponse.asDomain(): MovieListInfo {
     return MovieListInfo(
         page = page,
@@ -39,6 +38,6 @@ fun Movie.asDomain(): DomainMovie {
 fun Dates.asDomain(): DomainDates {
     return DomainDates(
         maximum = maximum,
-        minimum = minimum
+        minimum = minimum,
     )
 }

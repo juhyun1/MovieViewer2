@@ -1,6 +1,5 @@
 package com.movieviewer.core.data.mapper
 
-
 import com.movieviewer.core.network.model.AccessToken
 import com.movieviewer.core.network.model.RequestToken
 import com.movieviewer.core.domain.model.AccessToken as DomainAccessToken
@@ -17,9 +16,9 @@ fun AccessToken.asDomain(): DomainAccessToken {
 
 fun RequestToken.asDomain(): DomainRequestToken {
     return DomainRequestToken(
-       statusMessage = status_message,
-       requestToken = request_token,
-       success = success,
-       statusCode = status_code,
+        statusMessage = status_message,
+        requestToken = request_token,
+        success = success,
+        statusCode = status_code,
     )
 }
