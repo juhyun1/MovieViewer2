@@ -1,8 +1,8 @@
 package com.movieviewer.core.data.di
 
-import com.movieviewer.core.data.repository.AuthRepository
+import com.movieviewer.core.domain.repository.AuthRepository
 import com.movieviewer.core.data.repository.AuthRepositoryImpl
-import com.movieviewer.core.data.repository.MovieListRepository
+import com.movieviewer.core.domain.repository.MovieListRepository
 import com.movieviewer.core.data.repository.MovieListRepositoryImpl
 import dagger.Binds
 import dagger.Module

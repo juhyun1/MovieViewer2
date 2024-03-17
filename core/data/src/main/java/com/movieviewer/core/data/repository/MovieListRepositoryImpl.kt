@@ -1,5 +1,8 @@
 package com.movieviewer.core.data.repository
 
+import com.movieviewer.core.data.mapper.asDomain
+import com.movieviewer.core.domain.model.MovieListInfo
+import com.movieviewer.core.domain.repository.MovieListRepository
 import com.movieviewer.core.network.model.MovieListResponse
 import com.movieviewer.core.network.service.MovieListService
 import javax.inject.Inject
@@ -11,11 +14,11 @@ class MovieListRepositoryImpl @Inject constructor(
         region: String,
         language: String,
         page: Int,
-    ): MovieListResponse {
+    ): MovieListInfo {
         return movieListService.nowPlaying(
             region = region,
             language = language,
             page = page,
-        )
+        ).asDomain()
     }
 }
