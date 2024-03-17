@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.sp
 @Stable
 data class FontTokens(
     val movieCard: MovieCardTokens = MovieCardTokens(),
+    val movieDetails: MovieDetailsTokens = MovieDetailsTokens()
 )
 
 val LocalMovieViewerFonts = staticCompositionLocalOf<FontTokens> {
@@ -18,6 +19,17 @@ val LocalMovieViewerFonts = staticCompositionLocalOf<FontTokens> {
 data class MovieCardTokens(
     val title: TextStyle = TextStyle(
         fontSize = 15.sp,
+        fontWeight = FontWeight.Bold,
+    ),
+    val releaseDate: TextStyle = TextStyle(
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Normal,
+    ),
+)
+
+data class MovieDetailsTokens(
+    val title: TextStyle = TextStyle(
+        fontSize = 22.sp,
         fontWeight = FontWeight.Bold,
     ),
     val releaseDate: TextStyle = TextStyle(

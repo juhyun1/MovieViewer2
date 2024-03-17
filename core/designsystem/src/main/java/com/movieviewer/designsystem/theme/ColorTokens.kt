@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 @Stable
 data class ColorTokens(
     val movieCard: MovieCard = MovieCard(),
+    val movieDetails: MovieDetails = MovieDetails(),
 )
 
 val LocalMovieViewerColor = staticCompositionLocalOf<ColorTokens> {
@@ -18,6 +19,11 @@ data class MovieCard(
     val rate: Color = Green8,
     val title: Color = Black,
     val releaseDate: Color = Grey3,
+)
+
+data class MovieDetails(
+    val background: Color = White,
+    val title: Color = Black,
 )
 
 val Purple200 = Color(0xFFBB86FC)

@@ -33,6 +33,7 @@ import com.movieviewer.core.common.currency
 import com.movieviewer.core.common.imagePath
 import com.movieviewer.core.domain.model.details.MovieDetail
 import com.movieviewer.core.navigation.AppComposeNavigator
+import com.movieviewer.designsystem.theme.MovieViewerTheme
 
 @Composable
 fun MovieDetailsScreen(
@@ -74,7 +75,8 @@ fun MovieDetailsScreen(
                     ) {
                         Text(
                             text = it.title,
-                            color = Color.Black,
+                            color = MovieViewerTheme.colors.movieDetails.title,
+                            style = MovieViewerTheme.fonts.movieDetails.title
                         )
                         Text(
                             text = it.releaseDate,
@@ -90,7 +92,8 @@ fun MovieDetailsScreen(
                 Spacer(Modifier.height(30.dp))
                 Text(
                     text = "Overview",
-                    color = Color.Black,
+                    color = MovieViewerTheme.colors.movieDetails.title,
+                    style = MovieViewerTheme.fonts.movieDetails.title
                 )
                 Spacer(Modifier.height(10.dp))
                 Text(
@@ -100,21 +103,24 @@ fun MovieDetailsScreen(
                 Spacer(Modifier.height(30.dp))
                 Text(
                     text = "Top Billed Cast",
-                    color = Color.Black,
+                    color = MovieViewerTheme.colors.movieDetails.title,
+                    style = MovieViewerTheme.fonts.movieDetails.title
                 )
 //                Spacer(Modifier.height( = 10f)
 //                CreditsList(onClickPeople = onClickPeople)
                 Spacer(Modifier.height(30.dp))
                 Text(
                     text = "Videos",
-                    color = Color.Black,
+                    color = MovieViewerTheme.colors.movieDetails.title,
+                    style = MovieViewerTheme.fonts.movieDetails.title
                 )
 //                Spacer(Modifier.height( = 10f)
 //                TrailerList(onClickTrailer = onClickTrailer)
                 Spacer(Modifier.height(30.dp))
                 Text(
                     text = "Recommendations",
-                    color = Color.Black,
+                    color = MovieViewerTheme.colors.movieDetails.title,
+                    style = MovieViewerTheme.fonts.movieDetails.title
                 )
 //                Spacer(Modifier.height(10.dp))
 //                RecommendationsItemList( onClickMovie = onClickMovie )
