@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.movieviewer.core.navigation.AppComposeNavigator
 import com.movieviewer.core.navigation.Screens
 import com.movieviewer.feature.nowplaying.navigation.nowPlayingScreen
+import com.movieviewer.feature.upcoming.navigation.upComingScreen
 
 @Composable
 fun MovieViewerNavHost(
@@ -18,5 +19,6 @@ fun MovieViewerNavHost(
         startDestination = Screens.NowPlaying.name,
     ) {
         nowPlayingScreen(composeNavigator = composeNavigator)
+        upComingScreen(composeNavigator = composeNavigator)
     }
 }
