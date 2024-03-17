@@ -38,11 +38,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.movieviewer.core.common.imagePath
 import com.movieviewer.core.domain.model.Movie
+import com.movieviewer.core.navigation.AppComposeNavigator
 import com.movieviewer.designsystem.theme.MovieViewerTheme
 
 @Composable
 fun NowPlayingScreen(
     viewModel: NowPlayingViewModel = hiltViewModel(),
+    composeNavigator: AppComposeNavigator,
 ) {
     val moviePagingItems: LazyPagingItems<Movie> = viewModel.nowPlayingState.collectAsLazyPagingItems()
     Surface(
