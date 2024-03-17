@@ -69,6 +69,7 @@ dependencies {
     implementation(projects.core.navigation)
     implementation(projects.feature.nowplaying)
     implementation(projects.feature.upcoming)
+    implementation(projects.feature.details)
 
     // material
     implementation(libs.androidx.appcompat)
