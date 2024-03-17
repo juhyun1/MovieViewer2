@@ -22,7 +22,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,16 +33,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.movieviewer.core.common.imagePath
+import com.movieviewer.core.domain.model.Movie
 import com.movieviewer.designsystem.theme.MovieViewerTheme
 
 @Composable
 fun NowPlayingScreen(
     viewModel: NowPlayingViewModel = hiltViewModel(),
 ) {
-    val list = viewModel.test.collectAsState(initial = null)
+    val moviePagingItems: LazyPagingItems<Movie> = viewModel.moviesState.collectAsLazyPagingItems()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
@@ -52,14 +54,15 @@ fun NowPlayingScreen(
             viewModel.fetchNowPlayingList()
         }
 
-        list.value?.let {
-            LazyVerticalGrid(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(30.dp),
-                verticalArrangement = Arrangement.spacedBy(30.dp),
-                columns = GridCells.Fixed(2),
-            ) {
-                items(it.results) { movie ->
+        LazyVerticalGrid(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(30.dp),
+            verticalArrangement = Arrangement.spacedBy(30.dp),
+            columns = GridCells.Fixed(2),
+        ) {
+            items(moviePagingItems.itemCount) {
+                val movie = moviePagingItems[it]
+                movie?.let {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(containerColor = MovieViewerTheme.colors.movieCard.background),
