@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.movieviewer.core.domain.model.Movie
-import com.movieviewer.core.domain.repository.AuthRepository
 import com.movieviewer.core.domain.usecase.MovieListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NowPlayingViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
     private val movieListUseCase: MovieListUseCase,
 ) : ViewModel() {
     private val _nowPlayingState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
