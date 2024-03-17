@@ -1,6 +1,7 @@
 package com.movieviewer.feature.nowplaying
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -39,6 +40,7 @@ import coil.request.ImageRequest
 import com.movieviewer.core.common.imagePath
 import com.movieviewer.core.domain.model.Movie
 import com.movieviewer.core.navigation.AppComposeNavigator
+import com.movieviewer.core.navigation.Screens
 import com.movieviewer.designsystem.theme.MovieViewerTheme
 
 @Composable
@@ -65,7 +67,11 @@ fun NowPlayingScreen(
                 val movie = moviePagingItems[it]
                 movie?.let {
                     Card(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                composeNavigator.navigate(route = Screens.MovieDetails.createRoute(movieId = it.id))
+                            },
                         colors = CardDefaults.cardColors(containerColor = MovieViewerTheme.colors.movieCard.background),
                         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
                     ) {
