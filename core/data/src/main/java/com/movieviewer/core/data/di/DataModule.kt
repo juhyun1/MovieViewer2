@@ -1,8 +1,10 @@
 package com.movieviewer.core.data.di
 
 import com.movieviewer.core.data.repository.AuthRepositoryImpl
+import com.movieviewer.core.data.repository.MovieDetailsRepositoryImpl
 import com.movieviewer.core.data.repository.MovieListRepositoryImpl
 import com.movieviewer.core.domain.repository.AuthRepository
+import com.movieviewer.core.domain.repository.MovieDetailsRepository
 import com.movieviewer.core.domain.repository.MovieListRepository
 import dagger.Binds
 import dagger.Module
@@ -22,4 +24,9 @@ internal interface DataModule {
     fun bindsMovieListRepository(
         movieListRepositoryImpl: MovieListRepositoryImpl,
     ): MovieListRepository
+
+    @Binds
+    fun bindsMovieDetailsRepositoryImpl(
+        movieDetailsRepositoryImpl: MovieDetailsRepositoryImpl,
+    ): MovieDetailsRepository
 }

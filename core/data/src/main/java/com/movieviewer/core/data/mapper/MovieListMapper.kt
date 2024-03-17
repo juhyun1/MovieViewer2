@@ -1,8 +1,11 @@
 package com.movieviewer.core.data.mapper
 
+import android.text.TextUtils
 import com.movieviewer.core.domain.model.MovieListInfo
-import com.movieviewer.core.network.model.Dates
+import com.movieviewer.core.domain.model.details.MovieDetail
+import com.movieviewer.core.network.model.DatesDto
 import com.movieviewer.core.network.model.Movie
+import com.movieviewer.core.network.model.MovieDetailsResponse
 import com.movieviewer.core.network.model.MovieListResponse
 import com.movieviewer.core.domain.model.Dates as DomainDates
 import com.movieviewer.core.domain.model.Movie as DomainMovie
@@ -35,9 +38,33 @@ fun Movie.asDomain(): DomainMovie {
     )
 }
 
-fun Dates.asDomain(): DomainDates {
+fun DatesDto.asDomain(): DomainDates {
     return DomainDates(
         maximum = maximum,
         minimum = minimum,
+    )
+}
+
+fun MovieDetailsResponse.asDomain(): MovieDetail {
+    val list = ArrayList<String>()
+    for (genres in this.genres) {
+        list.add(genres.name)
+    }
+    val genres = TextUtils.join(",", list)
+
+    return MovieDetail(
+        revenue = this.revenue,
+        budget = this.budget,
+        originalLanguage = this.original_language,
+        status = this.status,
+        overview = this.overview,
+        tagline = this.tagline,
+        genres = genres,
+        voteAverage = this.vote_average,
+        runtime = this.runtime,
+        releaseDate = this.release_date,
+        title = this.title,
+        backdropImage = this.backdrop_path,
+        posterImage = this.poster_path,
     )
 }
