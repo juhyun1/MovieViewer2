@@ -17,7 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,14 +26,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.movieviewer.core.common.currency
 import com.movieviewer.core.common.imagePath
-import com.movieviewer.core.domain.model.details.MovieDetail
+import com.movieviewer.core.domain.model.UiState
 import com.movieviewer.core.navigation.AppComposeNavigator
 import com.movieviewer.designsystem.theme.MovieViewerTheme
+import kotlinx.coroutines.delay
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MovieDetailsScreen(
@@ -41,7 +42,7 @@ fun MovieDetailsScreen(
     composeNavigator: AppComposeNavigator,
     movieId: Int,
 ) {
-    val movieDetails: State<MovieDetail?> = viewModel.movieDetailState.collectAsStateWithLifecycle()
+    val state by viewModel.collectAsState()
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
@@ -49,123 +50,133 @@ fun MovieDetailsScreen(
         LaunchedEffect(key1 = Unit) {
             viewModel.fetchMovieDetails(movieId = movieId)
         }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 5.dp)
-                .verticalScroll(state = rememberScrollState()),
-        ) {
-            movieDetails.value?.let {
-                Row {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(it.posterImage?.imagePath())
-                            .crossfade(true)
-                            .build(),
-                        placeholder = painterResource(R.drawable.placeholder),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillWidth,
-                        modifier = Modifier
-                            .size(width = 150.dp, height = 230.dp)
-                            .clip(RoundedCornerShape(10.dp)),
-                    )
-                    Spacer(Modifier.width(10.dp))
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
+        when {
+            state.status is UiState.Error -> {
+                Text("Error")
+            }
+            (state.movieDetail == null) || state.status is UiState.Loading  -> {
+                Text("Loading")
+            }
+            state.status is UiState.Idle -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 5.dp)
+                        .verticalScroll(state = rememberScrollState()),
+                ) {
+                    state.movieDetail?.let {
+                        Row {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(it.posterImage?.imagePath())
+                                    .crossfade(true)
+                                    .build(),
+                                placeholder = painterResource(R.drawable.placeholder),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .size(width = 150.dp, height = 230.dp)
+                                    .clip(RoundedCornerShape(10.dp)),
+                            )
+                            Spacer(Modifier.width(10.dp))
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                Text(
+                                    text = it.title,
+                                    color = MovieViewerTheme.colors.movieDetails.title,
+                                    style = MovieViewerTheme.fonts.movieDetails.title
+                                )
+                                Text(
+                                    text = it.releaseDate,
+                                    color = Color.Black,
+                                )
+                                Spacer(Modifier.height(20.dp))
+                                Text(
+                                    text = it.tagline ?: "",
+                                    color = Color.Black,
+                                )
+                            }
+                        }
+                        Spacer(Modifier.height(30.dp))
                         Text(
-                            text = it.title,
+                            text = "Overview",
                             color = MovieViewerTheme.colors.movieDetails.title,
                             style = MovieViewerTheme.fonts.movieDetails.title
                         )
+                        Spacer(Modifier.height(10.dp))
                         Text(
-                            text = it.releaseDate,
+                            text = it.overview ?: "",
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(30.dp))
+                        Text(
+                            text = "Top Billed Cast",
+                            color = MovieViewerTheme.colors.movieDetails.title,
+                            style = MovieViewerTheme.fonts.movieDetails.title
+                        )
+//                Spacer(Modifier.height( = 10f)
+//                CreditsList(onClickPeople = onClickPeople)
+                        Spacer(Modifier.height(30.dp))
+                        Text(
+                            text = "Videos",
+                            color = MovieViewerTheme.colors.movieDetails.title,
+                            style = MovieViewerTheme.fonts.movieDetails.title
+                        )
+//                Spacer(Modifier.height( = 10f)
+//                TrailerList(onClickTrailer = onClickTrailer)
+                        Spacer(Modifier.height(30.dp))
+                        Text(
+                            text = "Recommendations",
+                            color = MovieViewerTheme.colors.movieDetails.title,
+                            style = MovieViewerTheme.fonts.movieDetails.title
+                        )
+//                Spacer(Modifier.height(10.dp))
+//                RecommendationsItemList( onClickMovie = onClickMovie )
+                        Spacer(Modifier.height(30.dp))
+                        Text(
+                            text = "Status",
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        Text(
+                            text = it.status,
                             color = Color.Black,
                         )
                         Spacer(Modifier.height(20.dp))
                         Text(
-                            text = it.tagline ?: "",
+                            text = "Original Language",
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        Text(
+                            text = it.originalLanguage,
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(20.dp))
+                        Text(
+                            text = "Budget",
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        Text(
+                            text = it.budget.currency(),
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(20.dp))
+                        Text(
+                            text = "Revenue",
+                            color = Color.Black,
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        Text(
+                            text = it.revenue.currency(),
                             color = Color.Black,
                         )
                     }
+                    Spacer(Modifier.height(50.dp))
                 }
-                Spacer(Modifier.height(30.dp))
-                Text(
-                    text = "Overview",
-                    color = MovieViewerTheme.colors.movieDetails.title,
-                    style = MovieViewerTheme.fonts.movieDetails.title
-                )
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = it.overview ?: "",
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(30.dp))
-                Text(
-                    text = "Top Billed Cast",
-                    color = MovieViewerTheme.colors.movieDetails.title,
-                    style = MovieViewerTheme.fonts.movieDetails.title
-                )
-//                Spacer(Modifier.height( = 10f)
-//                CreditsList(onClickPeople = onClickPeople)
-                Spacer(Modifier.height(30.dp))
-                Text(
-                    text = "Videos",
-                    color = MovieViewerTheme.colors.movieDetails.title,
-                    style = MovieViewerTheme.fonts.movieDetails.title
-                )
-//                Spacer(Modifier.height( = 10f)
-//                TrailerList(onClickTrailer = onClickTrailer)
-                Spacer(Modifier.height(30.dp))
-                Text(
-                    text = "Recommendations",
-                    color = MovieViewerTheme.colors.movieDetails.title,
-                    style = MovieViewerTheme.fonts.movieDetails.title
-                )
-//                Spacer(Modifier.height(10.dp))
-//                RecommendationsItemList( onClickMovie = onClickMovie )
-                Spacer(Modifier.height(30.dp))
-                Text(
-                    text = "Status",
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = it.status,
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(20.dp))
-                Text(
-                    text = "Original Language",
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = it.originalLanguage,
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(20.dp))
-                Text(
-                    text = "Budget",
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = it.budget.currency(),
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(20.dp))
-                Text(
-                    text = "Revenue",
-                    color = Color.Black,
-                )
-                Spacer(Modifier.height(10.dp))
-                Text(
-                    text = it.revenue.currency(),
-                    color = Color.Black,
-                )
             }
-            Spacer(Modifier.height(50.dp))
         }
     }
 }
