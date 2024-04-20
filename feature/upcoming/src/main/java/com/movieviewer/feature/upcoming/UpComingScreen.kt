@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
@@ -57,80 +58,91 @@ fun UpComingScreen(
         LaunchedEffect(key1 = Unit) {
             viewModel.fetchUpcomingList()
         }
+        when {
+            moviePagingItems.loadState.refresh == LoadState.Loading || moviePagingItems.loadState.append == LoadState.Loading -> {
+                Text(text = "Loading")
+            }
 
-        LazyVerticalGrid(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(30.dp),
-            verticalArrangement = Arrangement.spacedBy(30.dp),
-            columns = GridCells.Fixed(2),
-        ) {
-            items(moviePagingItems.itemCount) {
-                val movie = moviePagingItems[it]
-                movie?.let {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                composeNavigator.navigate(
-                                    route = Screens.MovieDetails.createRoute(
-                                        movieId = it.id,
-                                    ),
-                                )
-                            },
-                        colors = CardDefaults.cardColors(containerColor = MovieViewerTheme.colors.movieCard.background),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
-                    ) {
-                        BoxWithConstraints {
-                            val maxWidth = this.maxWidth
-                            Column {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(movie.posterPath.imagePath())
-                                        .crossfade(true)
-                                        .build(),
-                                    placeholder = painterResource(R.drawable.placeholder),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.FillBounds,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(maxWidth * (270.dp / 180.dp)),
-                                )
-                                Spacer(modifier = Modifier.height(20.dp))
-                                Column(
-                                    modifier = Modifier
-                                        .padding(horizontal = 15.dp)
-                                        .height(70.dp),
-                                ) {
-                                    Text(
-                                        text = movie.title,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Ellipsis,
-                                        style = MovieViewerTheme.fonts.movieCard.title,
-                                        color = MovieViewerTheme.colors.movieCard.title,
-                                    )
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Text(
-                                        text = movie.releaseDate,
-                                        style = MovieViewerTheme.fonts.movieCard.releaseDate,
-                                        color = MovieViewerTheme.colors.movieCard.releaseDate,
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(10.dp))
-                            }
-                            Box(
+            moviePagingItems.loadState.refresh is LoadState.Error || moviePagingItems.loadState.append is LoadState.Error -> {
+                Text(text = "Error")
+            }
+
+            moviePagingItems.loadState.refresh is LoadState.NotLoading || moviePagingItems.loadState.append is LoadState.NotLoading -> {
+                LazyVerticalGrid(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(30.dp),
+                    verticalArrangement = Arrangement.spacedBy(30.dp),
+                    columns = GridCells.Fixed(2),
+                ) {
+                    items(moviePagingItems.itemCount) {
+                        val movie = moviePagingItems[it]
+                        movie?.let {
+                            Card(
                                 modifier = Modifier
-                                    .padding(start = 10.dp, bottom = 85.dp)
-                                    .size(30.dp)
-                                    .clip(CircleShape)
-                                    .background(color = MovieViewerTheme.colors.movieCard.rate)
-                                    .align(alignment = Alignment.BottomStart),
-                                contentAlignment = Alignment.Center,
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        composeNavigator.navigate(
+                                            route = Screens.MovieDetails.createRoute(
+                                                movieId = it.id,
+                                            ),
+                                        )
+                                    },
+                                colors = CardDefaults.cardColors(containerColor = MovieViewerTheme.colors.movieCard.background),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
                             ) {
-                                Text(
-                                    text = (movie.voteAverage * 10).toInt().toString(),
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center,
-                                )
+                                BoxWithConstraints {
+                                    val maxWidth = this.maxWidth
+                                    Column {
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(LocalContext.current)
+                                                .data(movie.posterPath.imagePath())
+                                                .crossfade(true)
+                                                .build(),
+                                            placeholder = painterResource(R.drawable.placeholder),
+                                            contentDescription = null,
+                                            contentScale = ContentScale.FillBounds,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(maxWidth * (270.dp / 180.dp)),
+                                        )
+                                        Spacer(modifier = Modifier.height(20.dp))
+                                        Column(
+                                            modifier = Modifier
+                                                .padding(horizontal = 15.dp)
+                                                .height(70.dp),
+                                        ) {
+                                            Text(
+                                                text = movie.title,
+                                                maxLines = 2,
+                                                overflow = TextOverflow.Ellipsis,
+                                                style = MovieViewerTheme.fonts.movieCard.title,
+                                                color = MovieViewerTheme.colors.movieCard.title,
+                                            )
+                                            Spacer(modifier = Modifier.height(5.dp))
+                                            Text(
+                                                text = movie.releaseDate,
+                                                style = MovieViewerTheme.fonts.movieCard.releaseDate,
+                                                color = MovieViewerTheme.colors.movieCard.releaseDate,
+                                            )
+                                        }
+                                        Spacer(modifier = Modifier.height(10.dp))
+                                    }
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(start = 10.dp, bottom = 85.dp)
+                                            .size(30.dp)
+                                            .clip(CircleShape)
+                                            .background(color = MovieViewerTheme.colors.movieCard.rate)
+                                            .align(alignment = Alignment.BottomStart),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(
+                                            text = (movie.voteAverage * 10).toInt().toString(),
+                                            color = Color.White,
+                                            textAlign = TextAlign.Center,
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

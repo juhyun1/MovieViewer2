@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.movieviewer.core.domain.model.Movie
 import com.movieviewer.core.domain.repository.MovieListRepository
-import retrofit2.HttpException
-import java.io.IOException
 
 class UpComingSource(
     private val movieListRepository: MovieListRepository,
@@ -19,9 +17,7 @@ class UpComingSource(
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = if (movies.results.isEmpty()) null else movies.page + 1,
             )
-        } catch (exception: IOException) {
-            return LoadResult.Error(exception)
-        } catch (exception: HttpException) {
+        } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }
     }
